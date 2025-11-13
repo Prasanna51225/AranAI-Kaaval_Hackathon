@@ -1,0 +1,104 @@
+/*
+========================================================================================
+TRAFFIC MONITORING APP STYLES
+========================================================================================
+*/
+
+/* 1. Global Setup */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6; /* Light gray background for body */
+}
+
+/* 2. Main App Container (Mobile View Simulation) */
+.app-container {
+    /* Mobile-first constraints */
+    max-width: 450px;
+    margin: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 25px rgba(0,0,0,0.2);
+    background-color: #1f2937; /* Dark app background */
+}
+
+/* 3. Video Feed Area */
+.video-feed-container {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    overflow: hidden;
+    /* Placeholder background image (to be replaced by live video in production) */
+    background-image: url('https://placehold.co/450x800/262626/ffffff?text=AI+Camera+Feed+Active');
+    background-size: cover;
+    background-position: center;
+}
+
+/* 4. AI Overlay (Bounding Boxes & Labels) */
+.violation-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allows clicks/taps to pass through to elements underneath */
+}
+.bounding-box {
+    position: absolute;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    /* Border colors are handled by Tailwind classes in JS (e.g., border-yellow-400) */
+}
+.label {
+    position: absolute;
+    top: -24px;
+    left: 0;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 800;
+    color: white;
+    border-radius: 4px;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+}
+
+/* Specific Label Colors for Violation Types */
+.label.no-helmet { 
+    background-color: #f59e0b; /* Amber */
+    border: 1px solid #d97706; 
+}
+.label.triple-riding { 
+    background-color: #3b82f6; /* Blue */
+    border: 1px solid #2563eb; 
+}
+.label.illegal-plate, .label.wrong-way { 
+    background-color: #ef4444; /* Red */
+    border: 1px solid #dc2626; 
+}
+
+/* 5. Evidence Log Styles */
+.list-entry { 
+     transition: background-color 0.3s ease;
+}
+.list-entry:hover {
+    /* Tailwind hover class simulation */
+    background-color: #e5e7eb;
+}
+
+/* 6. Loading Spinner for UX */
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #fff;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

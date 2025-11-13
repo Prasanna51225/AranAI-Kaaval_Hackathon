@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Traffic Enforcement UI</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /*
+        ========================================================================================
+        FRONTEND STYLES: CSS
+        ========================================================================================
+        */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .app-container {
+            /* Mobile-first constraints */
+            max-width: 450px;
+            margin: auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 25px rgba(0,0,0,0.2);
+            background-color: #1f2937; /* Dark app background */
+        }
+        .video-feed-container {
+            /* Camera/Video Placeholder */
+            position: relative;
+            width: 100%;
+            height: 60vh;
+            overflow: hidden;
+            background-image: url('https://placehold.co/450x800/262626/ffffff?text=AI+Camera+Feed+Active');
+            background-size: cover;
+            background-position: center;
+        }
+        /* Styles for the AI Overlay elements */
+        .violation-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .bounding-box {
+            position: absolute;
+            border-width: 3px;
+            border-style: solid;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        .label {
+            position: absolute;
+            top: -24px;
+            left: 0;
+            padding: 2px 8px;
+            font-size: 11px;
+            font-weight: 800;
+            color: white;
+            border-radius: 4px;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+        .label.no-helmet { background-color: #f59e0b; border: 1px solid #d97706; }
+        .label.triple-riding { background-color: #3b82f6; border: 1px solid #2563eb; }
+        .label.illegal-plate, .label.wrong-way { background-color: #ef4444; border: 1px solid #dc2626; }
+        
+        /* Styles for the log section */
+        .list-entry { transition: background-color 0.3s ease; }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+    <!--
+    ========================================================================================
+    FRONTEND STRUCTURE: HTML
+    ========================================================================================
+    -->
+    <div class="app-container">
+        
+        <!-- Header / Control Panel -->
+        <div class="p-4 flex flex-col bg-gray-900 text-white shadow-xl">
+            <div class="flex justify-between items-center mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <div class="text-xl font-extrabold text-center tracking-wider">KAAVAL MONITORING</div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.398 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+            </div>
+            <!-- Placeholder for Operator ID, managed by JS/Auth -->
+            <div class="text-xs text-center text-gray-400">Operator ID: <span id="userIdDisplay" class="font-mono text-blue-300">Loading...</span></div>
+        </div>
+
+        <!-- Video Feed and Overlay Area -->
+        <div class="video-feed-container">
+            <!-- AI Detections will be rendered into this div -->
+            <div id="violationOverlay" class="violation-overlay"></div>
+            <!-- UI Overlays for Time and Status -->
+            <div class="absolute top-2 left-2 text-sm text-white font-bold bg-black bg-opacity-50 p-1 rounded-sm">
+                <span id="currentTime">00:00:00</span>
+            </div>
+             <div class="absolute top-2 right-2 text-sm text-yellow-300 font-bold bg-black bg-opacity-50 p-1 rounded-sm">
+                AI Status: <span id="detectionCount">0 Violations</span>
+            </div>
+        </div>
+
+        <!-- Control Bar -->
+        <div class="p-4 bg-gray-900 flex justify-around items-center border-t border-gray-700">
+            <!-- LOG HISTORY Button -->
+            <div class="flex flex-col items-center text-gray-400 cursor-pointer hover:text-green-400 transition" onclick="showMessage('View historical records clicked!')">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+                <span class="text-xs mt-1">LOG HISTORY</span>
+            </div>
+
+            <!-- CAPTURE Button -->
+            <button id="captureButton" class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center border-4 border-gray-600 shadow-2xl transition duration-150 ease-in-out transform hover:scale-105 active:scale-95">
+                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-red-600" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+            </button>
+
+            <!-- REPORT Button -->
+            <div class="flex flex-col items-center text-gray-400 cursor-pointer hover:text-red-400 transition" onclick="showMessage('Report Generation flow initiated!')">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                </svg>
+                <span class="text-xs mt-1">REPORT VIOLATION</span>
+            </div>
+        </div>
+
+        <!-- Violation Log Area (for JS to populate) -->
+        <div class="flex-grow p-4 bg-gray-100 overflow-y-auto">
+            <h3 class="text-lg font-bold text-gray-700 mb-3 border-b pb-2">Evidence Log (Live)</h3>
+            <div id="violationLogContainer" class="space-y-2">
+                 <div class="text-center py-4 text-gray-500 flex items-center justify-center" id="loadingSpinner">
+                    <div class="spinner mr-3"></div> Loading violations...
+                </div>
+            </div>
+        </div>
+        
+        <!-- Custom Modal for Messages (JS manages visibility) -->
+        <div id="messageBox" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50">
+            <div class="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full">
+                <p id="messageText" class="text-center text-lg font-medium mb-4 text-gray-800"></p>
+                <button onclick="hideMessage()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition">
+                    CLOSE
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Placeholder for JS files to be linked here -->
+    <!-- <script src="firestore.js"></script> -->
+    <!-- <script src="app.js"></script> -->
+
+</body>
+</html>
