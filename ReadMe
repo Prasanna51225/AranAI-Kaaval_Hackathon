@@ -1,1 +1,100 @@
+# AranAI: Real-Time AI Traffic Enforcement System by Team Shield Force for Kaaval Hackathon
 
+# Project Status: Hackathon Prototype (Complete Proof-of-Concept)
+
+# Problem Solved: AI-powered mobile camera solution for real-time traffic violation detection (as per Kaaval Hackathon Problem Statement).
+
+# Value Proposition
+
+The AranAI system (அரண் - Protection/Fortress) transforms the standard mobile camera into a smart, evidence-gathering tool for police enforcement. It delivers a superior enforcement solution by focusing on three core improvements:
+
+Real-time Speed: Shifts detection from slow, manual review to immediate, real-time AI classification.
+
+Tamper-Proof Evidence: Ensures evidence is Timestamped, Geotagged and instantly committed to a Firestore database, providing superior legal integrity.
+
+Automatic Capture: Eliminates the need for constant physical monitoring by providing an Automatic AI Overlay and Capture system.
+
+Solution Screenshots
+
+These images demonstrate the two primary enforcement modes of the AranAI platform.
+
+1. Moving Vehicle Enforcement (AranAI Core)
+
+This is the primary function of the current working prototype.
+
+Purpose: Real-time detection and logging of active traffic rule breaking.
+
+Violations Displayed: No Helmet, Triple Riding, Wrong Way, and Illegal Plate.
+
+
+
+2. Digital Chalk: Smart Parking Enforcement (Future Feature)
+
+This illustrates the platform's potential for static vehicle management.
+
+Purpose: Automated monitoring of time-restricted parking zones using LPR and GPS to issue e-challans for overstay violations.
+
+
+# Features & Simulated Workflow
+
+This prototype demonstrates the critical end-to-end workflow for field officers:
+
+Live AI Overlay: Simulates object detection, displaying dynamic bounding boxes and labels for violations such as No Helmet, Triple Riding, Wrong Way, and Illegal Plate.
+
+Evidence Capture: The large central button triggers the instantaneous capture of all detected violation metadata (time, location, violation type).
+
+Secure Logging: Violation records are instantly committed to a Firebase Firestore database for secure, immutable data storage and instant synchronization.
+
+Real-time Log: A slide-out log provides officers with an immediate, live list of all recently captured evidence for operational review.
+
+Design: The application is optimized with a Mobile-First Design for simple, one-handed operation in the field.
+
+# Technology Stack 
+
+The project is built on a modern, flexible web stack:
+
+Frontend/UI: HTML (index.html), CSS (style.css), and the Tailwind CSS utility framework for rapid, responsive styling.
+
+Core Logic: Vanilla JavaScript (app.js) handles the AI simulation, UI rendering, and user interactions.
+
+Database/Auth: The firestore.js module manages secure authentication and persistence using Firebase Firestore for the evidence log.
+
+Platform: Standard Vanilla JavaScript (ES Modules) for high performance and simple deployment.
+
+# Quick Start (Running the Demo)
+
+Prerequisites
+
+You must run the app via a web server due to the use of ES Modules (import/export in JS files).
+
+# Clone the Repository:
+
+git clone [https://github.com/](https://github.com/)[YOUR_USERNAME]/AranAI.git
+cd AranAI
+
+
+S# erve Locally: Use a tool like Node.js's live-server or Python's built-in simple HTTP server.
+
+# Using Python (accessible at http://localhost:8000)
+python -m http.server
+
+
+# Launch: Open your browser and navigate to the local server address (e.g., http://localhost:8000/index.html).
+
+# Key Interactions
+
+Observe Detections: Watch the dynamic bounding boxes and labels move in the mock video feed.
+
+Capture Evidence: Click the large red and white capture button at the bottom center to record a violation.
+
+View Evidence Log: Check the EVIDENCE LOG section at the bottom to see the new record appear instantly via Firestore.
+
+# Future Scope (Towards Production)
+
+Real AI Implementation: Integrate an actual ML model (e.g., TensorFlow.js or TFLite) to process live video data instead of simulation.
+
+Media Storage: Implement Firebase Storage to securely save the raw image/video frames of the violation.
+
+Advanced Geolocation: Use high-precision device GPS APIs to geotag evidence.
+
+Backend Reporting: Develop a comprehensive administrative dashboard for data analysis and violation trend mapping.
