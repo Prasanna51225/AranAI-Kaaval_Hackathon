@@ -30,14 +30,14 @@ This is the primary function of the current working prototype.
 
 *Violations Displayed:* No Helmet, Triple Riding, Wrong Way, and Illegal Plate.
 
-(Insert Image: WhatsApp Image 2025-11-13 at 18.46.24_b3610bb2.jpg here)
+![WhatsApp Image 2025-11-13 at 20 14 25_f30dc45a](https://github.com/user-attachments/assets/b6d78acd-d87b-4d0b-bdea-7e40aad3e3cb)
 
 ### 2. Digital Chalk: Smart Parking Enforcement (Future Feature)
 This illustrates the platform's immediate potential for static vehicle management.
 
 *Purpose:* Automated monitoring of time-restricted parking zones using LPR and GPS to issue e-challans for overstay violations.
 
-(Insert Image: WhatsApp Image 2025-11-13 at 18.46.24_e6c77d85.jpg here)
+![WhatsApp Image 2025-11-13 at 20 14 25_51ba066a](https://github.com/user-attachments/assets/d3125e84-bd79-4d3d-9407-ccdafeedaeee)
 
 ## Features & Simulated Workflow
 
