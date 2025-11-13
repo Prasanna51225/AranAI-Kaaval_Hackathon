@@ -12,11 +12,12 @@
 
 The AranAI system (அரண் - Protection/Fortress) transforms the standard police camera into a smart, evidence-gathering tool. It delivers superior enforcement by focusing on three core pillars:
 
-- ** Real-time Speed:** Shifts detection from slow, manual review to immediate, real-time AI classification.
-- ** Tamper-Proof Evidence:** Ensures evidence is Timestamped, Geotagged, and instantly committed to a Firebase Firestore database, providing superior legal integrity.
-- ** Automatic Capture:** Eliminates the need for constant physical monitoring by providing an Automatic AI Overlay and Capture system.
+- **Real-time Speed:** Shifts detection from slow, manual review to immediate, real-time AI classification.
+- **Tamper-Proof Evidence:** Ensures evidence is Timestamped, Geotagged, and instantly committed to a Firebase Firestore database, providing superior legal integrity.
+- **Automatic Capture:** Eliminates the need for constant physical monitoring by providing an Automatic AI Overlay and Capture system.
 
 ## Solution Screenshots
+
 
 These images demonstrate the two primary, high-value enforcement modes of the AranAI platform.
 
@@ -65,7 +66,7 @@ You must run the app via a web server due to the use of ES Modules (import/expor
 
 ```bash
 # 1. Clone the Repository
-https://github.com/Prasanna51225/AranAI-Kaaval_Hackathon
+git clone https://github.com/Prasanna51225/AranAI-Kaaval_Hackathon
 cd AranAI
 
 # 2. Serve Locally - Using Python (accessible at http://localhost:8000)
@@ -73,3 +74,4 @@ python -m http.server
 
 # Alternative: Using Node.js live-server
 npx live-server
+```
