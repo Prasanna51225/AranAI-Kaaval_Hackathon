@@ -65,7 +65,7 @@ You must run the app via a web server due to the use of ES Modules (import/expor
 
 ```bash
 # 1. Clone the Repository
-git clone https://github.com/[YOUR_USERNAME]/AranAI.git
+https://github.com/Prasanna51225/AranAI-Kaaval_Hackathon
 cd AranAI
 
 # 2. Serve Locally - Using Python (accessible at http://localhost:8000)
