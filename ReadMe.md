@@ -17,10 +17,6 @@ The AranAI system (அரண் - Protection/Fortress) transforms the standard p
 - *Automatic Capture:* Eliminates the need for constant physical monitoring by providing an Automatic AI Overlay and Capture system.
 
 ## Solution Screenshots
- ![WhatsApp Image 2025-11-13 at 20 14 25_f30dc45a](https://github.com/user-attachments/assets/b6d78acd-d87b-4d0b-bdea-7e40aad3e3cb)
-
-![WhatsApp Image 2025-11-13 at 20 14 25_51ba066a](https://github.com/user-attachments/assets/d3125e84-bd79-4d3d-9407-ccdafeedaeee)
-
 These images demonstrate the two primary, high-value enforcement modes of the AranAI platform.
 
 ### 1. Moving Vehicle Enforcement (AranAI Core)
